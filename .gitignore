@@ -1,0 +1,17 @@
+# Claude Flow
+.claude-flow/
+.swarm/
+
+# Nix
+result
+result-*
+
+# OS
+.DS_Store
+*~
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
