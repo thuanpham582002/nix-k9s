@@ -45,8 +45,8 @@ nix run .#k9s-writable       # Writable mode
 - **get-all**: Get all resources with less (g) *requires kubectl get-all plugin*
 - **dive**: Phân tích Docker images (Shift-I)
 - **stern**: Multi-pod log tailing (Ctrl-L)
-- **port-forward**: Port forwarding (Shift-F)
-- **edit**: Edit resources (e)
+- **port-forward**: Port forwarding (Ctrl-P)  
+- **edit**: Edit resources (Ctrl-E)
 - **json**: Export resources as JSON (j)
 - **decode-secret**: Decode Kubernetes secrets (x)
 - **raw-logs-follow**: Follow logs real-time (Ctrl-G)

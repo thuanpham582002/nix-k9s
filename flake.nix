@@ -96,7 +96,7 @@
             
             # Port forward with confirmation
             pf:
-              shortCut: Shift-F
+              shortCut: Ctrl-P
               confirm: true
               description: "Port forward"
               scopes:
@@ -111,9 +111,9 @@
                 - -n
                 - $NAMESPACE
             
-            # Edit resource
+            # Edit resource  
             edit:
-              shortCut: e
+              shortCut: Ctrl-E
               confirm: false
               description: "Edit resource"
               scopes:
