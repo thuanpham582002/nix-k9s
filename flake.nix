@@ -270,21 +270,18 @@
                 - $CONTEXT
                 - --watch
             
-            # Remove namespace (EXTREMELY DANGEROUS!)
+            # Remove namespace finalizers (for stuck namespaces)
             rm-ns:
-              shortCut: Ctrl-R
+              shortCut: n
               confirm: true
-              description: "Remove namespace (EXTREMELY DANGEROUS!)"
+              description: "Remove namespace finalizers (DANGEROUS!)"
               scopes:
                 - namespaces
-              command: kubectl
+              command: sh
               background: false
               args:
-                - delete
-                - namespace
-                - $NAME
-                - --context
-                - $CONTEXT
+                - -c
+                - kubectl get namespace $NAME -o json | jq '.spec.finalizers=[]' | kubectl replace --raw /api/v1/namespaces/$NAME/finalize -f - > /dev/null
         '';
         
         k9sAliases = pkgs.writeTextDir "config/aliases.yaml" ''
@@ -414,6 +411,7 @@
             stern
             dive
             kubernetes-helm
+            jq
           ];
           
           shellHook = ''

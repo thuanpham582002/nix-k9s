@@ -47,7 +47,7 @@ nix develop
 - **remove-finalizers**: Remove finalizers (Ctrl-F) ⚠️ DANGEROUS
 - **debug-container**: Add debug container (Shift-D) ⚠️ DANGEROUS
 - **watch-events**: Watch namespace events (Shift-E)
-- **rm-ns**: Remove namespace (Ctrl-R) 🚨 EXTREMELY DANGEROUS
+- **rm-ns**: Remove namespace finalizers (n) ⚠️ DANGEROUS
 
 ### 🎯 Aliases
 - `dp` → deployments
@@ -77,6 +77,7 @@ Development shell bao gồm:
 - **stern**: Multi-pod log tailing
 - **dive**: Docker image explorer
 - **helm**: Kubernetes package manager
+- **jq**: JSON processor (required for rm-ns plugin)
 
 ## 🚀 Usage Examples
 
