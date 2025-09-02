@@ -159,7 +159,7 @@
                 - secret
                 - $NAME
                 - -o
-                - go-template='{{range $k,$v := .data}}{{printf "%s: " $k}}{{if not $v}}{{$v}}{{else}}{{$v | base64decode}}{{end}}{{"\n"}}{{end}}'
+                - "go-template={{range \$k,\$v := .data}}{{printf \"%s: \" \$k}}{{if not \$v}}{{\$v}}{{else}}{{\$v | base64decode}}{{end}}{{\"\\n\"}}{{end}}"
                 - -n
                 - $NAMESPACE
             
@@ -378,7 +378,7 @@
         '';
         
         k9sHotkeys = pkgs.writeTextDir "config/hotkeys.yaml" ''
-          hotkeys:
+          hotKeys:
             # Global hotkeys
             ':':
               shortCut: ':'
