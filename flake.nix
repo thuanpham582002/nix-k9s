@@ -310,6 +310,30 @@
                 - up
                 - -n
                 - $NAME
+            
+            # Debug PVC with temporary pod
+            pvc-debug:
+              shortCut: Shift-P
+              confirm: true
+              description: "Debug PVC with pod"
+              scopes:
+                - persistentvolumeclaims
+              command: kubectl
+              background: false
+              args:
+                - run
+                - debug-$NAME
+                - -n
+                - $NAMESPACE
+                - --context
+                - $CONTEXT
+                - --image=busybox
+                - --rm
+                - -i
+                - --tty
+                - --overrides={"spec":{"containers":[{"name":"debug","image":"busybox","command":["sh"],"stdin":true,"tty":true,"volumeMounts":[{"name":"volume","mountPath":"/data"}]}],"volumes":[{"name":"volume","persistentVolumeClaim":{"claimName":"$NAME"}}]}}
+                - -- 
+                - sh
         '';
         
         k9sAliases = pkgs.writeTextDir "config/aliases.yaml" ''

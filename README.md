@@ -50,6 +50,7 @@ nix develop
 - **rm-ns**: Remove namespace finalizers (n) ⚠️ DANGEROUS
 - **szero-down**: Scale down namespace (Shift-Z) ⚠️ DANGEROUS *requires szero*
 - **szero-up**: Scale up namespace (Shift-U) ⚠️ DANGEROUS *requires szero*
+- **pvc-debug**: Debug PVC with temporary pod (Shift-P)
 
 ### 🎯 Aliases
 - `dp` → deployments
