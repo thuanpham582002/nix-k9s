@@ -145,7 +145,7 @@
                 - -n
                 - $NAMESPACE
             
-            # Decode secrets
+            # Decode secrets (simplified)
             decode-secret:
               shortCut: x
               confirm: false
@@ -159,7 +159,7 @@
                 - secret
                 - $NAME
                 - -o
-                - "go-template={{range \$k,\$v := .data}}{{printf \"%s: \" \$k}}{{if not \$v}}{{\$v}}{{else}}{{\$v | base64decode}}{{end}}{{\"\\n\"}}{{end}}"
+                - yaml
                 - -n
                 - $NAMESPACE
             
@@ -378,10 +378,7 @@
         '';
         
         k9sHotkeys = pkgs.writeTextDir "config/hotkeys.yaml" ''
-          hotKeys:
-            # Custom hotkeys - only add non-conflicting ones
-            # Built-in hotkeys like ?, d, l, v, y are handled by k9s automatically
-            # Plugins provide most custom functionality
+          hotKeys: {}
         '';
         
         k9sConfigPackage = pkgs.runCommand "k9s-config" {} ''
