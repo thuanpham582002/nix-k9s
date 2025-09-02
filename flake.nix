@@ -65,20 +65,18 @@
               args:
                 - $COL-IMAGE
             
-            # Get all resources in yaml
+            # Get all resources with get-all plugin
             get-all:
               shortCut: g
               confirm: false
               description: "Get all resources"
               scopes:
                 - all
-              command: kubectl
+              command: sh
               background: false
               args:
-                - get
-                - all
-                - -o
-                - yaml
+                - -c
+                - kubectl get-all -n $NAMESPACE --context $CONTEXT | less
             
             # View logs with stern
             stern:
@@ -164,6 +162,72 @@
                 - go-template='{{range $k,$v := .data}}{{printf "%s: " $k}}{{if not $v}}{{$v}}{{else}}{{$v | base64decode}}{{end}}{{"\n"}}{{end}}'
                 - -n
                 - $NAMESPACE
+            
+            # Raw logs follow (from k9s official plugins)
+            raw-logs-follow:
+              shortCut: Ctrl-G
+              confirm: false
+              description: "Follow logs"
+              scopes:
+                - pods
+              command: kubectl
+              background: false
+              args:
+                - logs
+                - -f
+                - $NAME
+                - -n
+                - $NAMESPACE
+                - --context
+                - $CONTEXT
+            
+            # Log with less viewer
+            log-less:
+              shortCut: Shift-K
+              confirm: false
+              description: "Logs <Less>"
+              scopes:
+                - pods
+              command: sh
+              background: false
+              args:
+                - -c
+                - kubectl logs $NAME -n $NAMESPACE --context $CONTEXT | less
+            
+            # Log container with less
+            log-less-container:
+              shortCut: Shift-L
+              confirm: false
+              description: "Container Logs <Less>"
+              scopes:
+                - containers
+              command: sh
+              background: false
+              args:
+                - -c
+                - kubectl logs $POD -c $NAME -n $NAMESPACE --context $CONTEXT | less
+            
+            # Remove finalizers (DANGEROUS - use with caution!)
+            remove-finalizers:
+              shortCut: Ctrl-F
+              confirm: true
+              description: "Remove Finalizers (DANGEROUS!)"
+              scopes:
+                - all
+              command: kubectl
+              background: false
+              args:
+                - patch
+                - $RESOURCE_NAME
+                - $NAME
+                - -n
+                - $NAMESPACE
+                - --context
+                - $CONTEXT
+                - -p
+                - '{"metadata":{"finalizers":null}}'
+                - --type
+                - merge
         '';
         
         k9sAliases = pkgs.writeTextDir "config/aliases.yaml" ''
