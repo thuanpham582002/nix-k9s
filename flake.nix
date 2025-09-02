@@ -438,20 +438,22 @@
         packages = {
           default = k9sConfigPackage;
           k9s-configured = pkgs.writeShellScriptBin "k9s-configured" ''
-            # Create writable config directory in user's home
+            # Use Nix store config directly - fully automatic!
+            export K9S_CONFIG_DIR="${k9sConfigPackage}/config"
+            echo "🚀 Using k9s config: $K9S_CONFIG_DIR"
+            exec ${pkgs.k9s}/bin/k9s "$@"
+          '';
+          k9s-writable = pkgs.writeShellScriptBin "k9s-writable" ''
+            # Alternative: writable config (for customization)
             K9S_USER_CONFIG="$HOME/.config/k9s"
             mkdir -p "$K9S_USER_CONFIG"/{skins,clusters,screen-dumps,benchmarks}
             
-            # Copy config files if they don't exist
-            for config_file in config.yaml plugins.yaml aliases.yaml hotkeys.yaml; do
-              if [[ ! -f "$K9S_USER_CONFIG/$config_file" ]]; then
-                cp "${k9sConfigPackage}/config/$config_file" "$K9S_USER_CONFIG/"
-              fi
-            done
+            # Always sync latest config from Nix store
+            cp "${k9sConfigPackage}/config/"* "$K9S_USER_CONFIG/"
+            chmod +w "$K9S_USER_CONFIG"/*
             
-            # Set config directory and run k9s
             export K9S_CONFIG_DIR="$K9S_USER_CONFIG"
-            echo "🚀 Using k9s config: $K9S_CONFIG_DIR"
+            echo "🚀 Using writable k9s config: $K9S_CONFIG_DIR"
             exec ${pkgs.k9s}/bin/k9s "$@"
           '';
         };
@@ -494,6 +496,10 @@
           default = {
             type = "app";
             program = "${self.packages.${system}.k9s-configured}/bin/k9s-configured";
+          };
+          k9s-writable = {
+            type = "app";
+            program = "${self.packages.${system}.k9s-writable}/bin/k9s-writable";
           };
         };
       });

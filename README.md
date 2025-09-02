@@ -4,9 +4,13 @@ Nix flake để setup k9s với các plugin và cấu hình có sẵn.
 
 ## 🚀 Quick Start
 
-### Chạy k9s với cấu hình sẵn có
+### Chạy k9s với cấu hình sẵn có (Fully Automatic!)
 ```bash
+# Automatic - sử dụng Nix store config (read-only, luôn up-to-date)
 nix run github:thuanpham582002/nix-k9s
+
+# Alternative - writable config (để customize)  
+nix run github:thuanpham582002/nix-k9s#k9s-writable
 ```
 
 ### Clone và phát triển
@@ -14,6 +18,10 @@ nix run github:thuanpham582002/nix-k9s
 git clone https://github.com/thuanpham582002/nix-k9s
 cd nix-k9s
 nix develop
+
+# Test locally
+nix run .#k9s-configured     # Automatic mode
+nix run .#k9s-writable       # Writable mode
 ```
 
 ### Sử dụng trong project khác
@@ -89,14 +97,19 @@ Development shell bao gồm:
 # Enter development shell
 nix develop
 
-# Chạy k9s với config có sẵn
+# Automatic mode - không cần setup gì!
 nix run .#k9s-configured
 
-# Hoặc setup thủ công
-cp -r /nix/store/.../k9s-config/config/* ~/.config/k9s/
-export K9S_CONFIG_DIR=~/.config/k9s
-k9s
+# Writable mode - nếu muốn customize
+nix run .#k9s-writable
 ```
+
+### 🔄 Automatic vs Writable modes
+
+| Mode | Config Source | Updates | Customizable | Use Case |
+|------|---------------|---------|--------------|----------|
+| **k9s-configured** | Nix store | Automatic | No | Daily use, always latest |
+| **k9s-writable** | ~/.config/k9s | Manual sync | Yes | Development, customization |
 
 ### In CI/CD
 ```bash
