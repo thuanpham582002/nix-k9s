@@ -70,15 +70,17 @@ nix run .#k9s-writable       # Writable mode
 - `pv` → persistentvolumes
 - `pvc` → persistentvolumeclaims
 
-### ⌨️ Hotkeys
+### ⌨️ Built-in Hotkeys
+k9s provides standard hotkeys out-of-the-box:
 - `:` → Command mode
-- `?` → Help
+- `?` → Help  
 - `q` → Quit
 - `v` → View YAML
 - `d` → Describe
 - `l` → Logs
 - `Ctrl-D` → Delete
-- `Ctrl-N/P` → Switch namespaces
+
+Custom functionality is provided via **plugins** (see above)
 
 ## 🛠️ Tools
 

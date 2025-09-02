@@ -379,50 +379,9 @@
         
         k9sHotkeys = pkgs.writeTextDir "config/hotkeys.yaml" ''
           hotKeys:
-            # Global hotkeys
-            ':':
-              shortCut: ':'
-              description: "Command mode"
-            
-            # Navigation hotkeys  
-            '?':
-              shortCut: '?'
-              description: "Help"
-            
-            'q':
-              shortCut: 'q'
-              description: "Quit"
-            
-            # View hotkeys
-            'v':
-              shortCut: 'v'
-              description: "View YAML"
-            
-            'd':
-              shortCut: 'd'
-              description: "Describe"
-            
-            'l':
-              shortCut: 'l'
-              description: "Logs"
-            
-            # Action hotkeys
-            'ctrl-d':
-              shortCut: 'Ctrl-D'
-              description: "Delete"
-            
-            'y':
-              shortCut: 'y'
-              description: "YAML"
-              
-            # Namespace switching
-            'ctrl-n':
-              shortCut: 'Ctrl-N'
-              description: "Next namespace"
-            
-            'ctrl-p':
-              shortCut: 'Ctrl-P'
-              description: "Previous namespace"
+            # Custom hotkeys - only add non-conflicting ones
+            # Built-in hotkeys like ?, d, l, v, y are handled by k9s automatically
+            # Plugins provide most custom functionality
         '';
         
         k9sConfigPackage = pkgs.runCommand "k9s-config" {} ''
