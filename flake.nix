@@ -251,6 +251,24 @@
                 - --target=$NAME
                 - -- 
                 - bash
+            
+            # Watch events in namespace
+            watch-events:
+              shortCut: Shift-E
+              confirm: false
+              description: "Watch events"
+              scopes:
+                - all
+              command: kubectl
+              background: false
+              args:
+                - get
+                - events
+                - -n
+                - $NAMESPACE
+                - --context
+                - $CONTEXT
+                - --watch
         '';
         
         k9sAliases = pkgs.writeTextDir "config/aliases.yaml" ''

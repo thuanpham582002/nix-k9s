@@ -46,6 +46,7 @@ nix develop
 - **log-less-container**: Container logs with less (Shift-L)
 - **remove-finalizers**: Remove finalizers (Ctrl-F) ⚠️ DANGEROUS
 - **debug-container**: Add debug container (Shift-D) ⚠️ DANGEROUS
+- **watch-events**: Watch namespace events (Shift-E)
 
 ### 🎯 Aliases
 - `dp` → deployments
