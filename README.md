@@ -106,10 +106,16 @@ nix run .#k9s-writable
 
 ### 🔄 Automatic vs Writable modes
 
-| Mode | Config Source | Updates | Customizable | Use Case |
-|------|---------------|---------|--------------|----------|
-| **k9s-configured** | Nix store | Automatic | No | Daily use, always latest |
-| **k9s-writable** | ~/.config/k9s | Manual sync | Yes | Development, customization |
+| Mode | Config Source | Runtime Dirs | Updates | Customizable | Use Case |
+|------|---------------|--------------|---------|--------------|----------|
+| **k9s-configured** | Nix store overlay | Temp (auto-cleanup) | Automatic | No | Daily use, always latest |
+| **k9s-writable** | ~/.config/k9s | Persistent | Manual sync | Yes | Development, customization |
+
+### ✨ Technical Implementation:
+- **Overlay mode**: Creates temporary writable overlay from Nix store config
+- **Auto-cleanup**: Temporary directories removed on exit
+- **No pollution**: No files left in home directory
+- **Permission handling**: All runtime directories writable
 
 ### In CI/CD
 ```bash

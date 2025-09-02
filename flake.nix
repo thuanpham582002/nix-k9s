@@ -438,13 +438,24 @@
         packages = {
           default = k9sConfigPackage;
           k9s-configured = pkgs.writeShellScriptBin "k9s-configured" ''
-            # Use Nix store config directly - fully automatic!
-            export K9S_CONFIG_DIR="${k9sConfigPackage}/config"
-            echo "🚀 Using k9s config: $K9S_CONFIG_DIR"
+            # Create a temporary overlay directory - fully automatic!
+            K9S_TEMP_CONFIG=$(mktemp -d -t k9s-config.XXXXXX)
+            trap "rm -rf $K9S_TEMP_CONFIG" EXIT
+            
+            # Copy static configs from Nix store
+            cp -r "${k9sConfigPackage}/config/"* "$K9S_TEMP_CONFIG/"
+            
+            # Create writable runtime directories
+            mkdir -p "$K9S_TEMP_CONFIG"/{screen-dumps,benchmarks,skins,clusters}
+            chmod -R +w "$K9S_TEMP_CONFIG"
+            
+            # Use the overlay
+            export K9S_CONFIG_DIR="$K9S_TEMP_CONFIG"
+            echo "🚀 Using k9s config overlay: $K9S_CONFIG_DIR"
             exec ${pkgs.k9s}/bin/k9s "$@"
           '';
           k9s-writable = pkgs.writeShellScriptBin "k9s-writable" ''
-            # Alternative: writable config (for customization)
+            # Alternative: persistent writable config (for customization)
             K9S_USER_CONFIG="$HOME/.config/k9s"
             mkdir -p "$K9S_USER_CONFIG"/{skins,clusters,screen-dumps,benchmarks}
             
@@ -453,7 +464,7 @@
             chmod +w "$K9S_USER_CONFIG"/*
             
             export K9S_CONFIG_DIR="$K9S_USER_CONFIG"
-            echo "🚀 Using writable k9s config: $K9S_CONFIG_DIR"
+            echo "🚀 Using persistent writable k9s config: $K9S_USER_CONFIG"
             exec ${pkgs.k9s}/bin/k9s "$@"
           '';
         };
