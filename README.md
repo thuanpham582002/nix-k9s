@@ -47,6 +47,7 @@ nix develop
 - **remove-finalizers**: Remove finalizers (Ctrl-F) ⚠️ DANGEROUS
 - **debug-container**: Add debug container (Shift-D) ⚠️ DANGEROUS
 - **watch-events**: Watch namespace events (Shift-E)
+- **rm-ns**: Remove namespace (Ctrl-R) 🚨 EXTREMELY DANGEROUS
 
 ### 🎯 Aliases
 - `dp` → deployments

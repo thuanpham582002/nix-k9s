@@ -269,6 +269,22 @@
                 - --context
                 - $CONTEXT
                 - --watch
+            
+            # Remove namespace (EXTREMELY DANGEROUS!)
+            rm-ns:
+              shortCut: Ctrl-R
+              confirm: true
+              description: "Remove namespace (EXTREMELY DANGEROUS!)"
+              scopes:
+                - namespaces
+              command: kubectl
+              background: false
+              args:
+                - delete
+                - namespace
+                - $NAME
+                - --context
+                - $CONTEXT
         '';
         
         k9sAliases = pkgs.writeTextDir "config/aliases.yaml" ''
