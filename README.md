@@ -48,6 +48,8 @@ nix develop
 - **debug-container**: Add debug container (Shift-D) ⚠️ DANGEROUS
 - **watch-events**: Watch namespace events (Shift-E)
 - **rm-ns**: Remove namespace finalizers (n) ⚠️ DANGEROUS
+- **szero-down**: Scale down namespace (Shift-Z) ⚠️ DANGEROUS *requires szero*
+- **szero-up**: Scale up namespace (Shift-U) ⚠️ DANGEROUS *requires szero*
 
 ### 🎯 Aliases
 - `dp` → deployments
@@ -98,6 +100,23 @@ k9s
 ### In CI/CD
 ```bash
 nix run github:thuanpham582002/nix-k9s -- --context production
+```
+
+## 📋 Plugin Dependencies
+
+Một số plugins yêu cầu tools bổ sung:
+
+### Required Tools
+- **get-all**: `kubectl get-all` plugin
+- **szero-down/szero-up**: `szero` tool from https://github.com/jadolg/szero
+
+### Install Dependencies
+```bash
+# Install kubectl get-all plugin
+kubectl krew install get-all
+
+# Install szero (Go required)
+go install github.com/jadolg/szero@latest
 ```
 
 ## 🔧 Customization

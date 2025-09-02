@@ -282,6 +282,34 @@
               args:
                 - -c
                 - kubectl get namespace $NAME -o json | jq '.spec.finalizers=[]' | kubectl replace --raw /api/v1/namespaces/$NAME/finalize -f - > /dev/null
+            
+            # Scale down all resources in namespace (requires szero)
+            szero-down:
+              shortCut: Shift-Z
+              confirm: true
+              description: "Scale down namespace (DANGEROUS!)"
+              scopes:
+                - namespaces
+              command: szero
+              background: false
+              args:
+                - down
+                - -n
+                - $NAME
+            
+            # Scale up all resources in namespace (requires szero)
+            szero-up:
+              shortCut: Shift-U
+              confirm: true
+              description: "Scale up namespace (DANGEROUS!)"
+              scopes:
+                - namespaces
+              command: szero
+              background: false
+              args:
+                - up
+                - -n
+                - $NAME
         '';
         
         k9sAliases = pkgs.writeTextDir "config/aliases.yaml" ''
