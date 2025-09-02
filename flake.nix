@@ -55,7 +55,7 @@
           plugins:
             # Debug pod with dive
             dive:
-              shortCut: Shift-D
+              shortCut: Shift-I
               confirm: true
               description: "Dive image"
               scopes:
@@ -228,6 +228,29 @@
                 - '{"metadata":{"finalizers":null}}'
                 - --type
                 - merge
+            
+            # Add debug container (DANGEROUS - requires kubectl alpha debug)
+            debug-container:
+              shortCut: Shift-D
+              confirm: true
+              description: "Add debug container (DANGEROUS!)"
+              scopes:
+                - containers
+              command: kubectl
+              background: false
+              args:
+                - debug
+                - $POD
+                - -n
+                - $NAMESPACE
+                - --context
+                - $CONTEXT
+                - -i
+                - -t
+                - --image=nicolaka/netshoot:v0.13
+                - --target=$NAME
+                - -- 
+                - bash
         '';
         
         k9sAliases = pkgs.writeTextDir "config/aliases.yaml" ''

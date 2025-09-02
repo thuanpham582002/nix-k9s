@@ -35,7 +35,7 @@ nix develop
 
 ### 🔌 Plugins
 - **get-all**: Get all resources with less (g) *requires kubectl get-all plugin*
-- **dive**: Phân tích Docker images (Shift-D)
+- **dive**: Phân tích Docker images (Shift-I)
 - **stern**: Multi-pod log tailing (Ctrl-L)
 - **port-forward**: Port forwarding (Shift-F)
 - **edit**: Edit resources (e)
@@ -45,6 +45,7 @@ nix develop
 - **log-less**: View logs with less pager (Shift-K)
 - **log-less-container**: Container logs with less (Shift-L)
 - **remove-finalizers**: Remove finalizers (Ctrl-F) ⚠️ DANGEROUS
+- **debug-container**: Add debug container (Shift-D) ⚠️ DANGEROUS
 
 ### 🎯 Aliases
 - `dp` → deployments
